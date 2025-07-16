@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace AuthService.Models;
+namespace AuthService.Entities.Request;
 
 public class UserRequest
 {
