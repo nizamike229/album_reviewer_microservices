@@ -22,7 +22,8 @@ public class AuthRepository : IAuthRepository
         var isUsernameFree = await _context.Users.AnyAsync(x => x.Username == user.Username);
         if (isUsernameFree)
             throw new Exception("Username is already taken");
-        
+
+        user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(user.PasswordHash);
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
         return "User successfully registered";
