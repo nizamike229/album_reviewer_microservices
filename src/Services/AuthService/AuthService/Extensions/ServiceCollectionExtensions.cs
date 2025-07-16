@@ -1,4 +1,8 @@
 using System.Text;
+using AuthService.Contracts.Repositories;
+using AuthService.Contracts.Services;
+using AuthService.Repositories;
+using AuthService.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -37,5 +41,12 @@ public static class ServiceCollectionExtensions
                 };
             });
         builder.Services.AddAuthorization();
+    }
+
+    public static void AddServices(this IServiceCollection services)
+    {
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IAuthRepository, AuthRepository>();
+        services.AddScoped<IAuthService, Services.AuthService>();
     }
 }
