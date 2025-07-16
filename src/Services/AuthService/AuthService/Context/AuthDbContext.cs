@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AuthService.Context;
 
-public partial class AuthDbContext : DbContext
+public sealed partial class AuthDbContext : DbContext
 {
     public AuthDbContext()
     {
@@ -12,9 +12,13 @@ public partial class AuthDbContext : DbContext
     public AuthDbContext(DbContextOptions<AuthDbContext> options)
         : base(options)
     {
+        if (Database.GetPendingMigrations().Any())
+        {
+            Database.Migrate();
+        }
     }
 
-    public virtual DbSet<User> Users { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlite("Data Source=../main.sqlite");
@@ -31,7 +35,6 @@ public partial class AuthDbContext : DbContext
                 .HasColumnType("text(40)")
                 .HasColumnName("username");
         });
-
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
