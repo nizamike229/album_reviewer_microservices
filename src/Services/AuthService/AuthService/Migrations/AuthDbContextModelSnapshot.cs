@@ -27,6 +27,10 @@ namespace AuthService.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("password_hash");
 
+                    b.Property<int>("Role")
+                        .HasColumnType("text(5)")
+                        .HasColumnName("role");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("text(40)")

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthService.Migrations
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20250716073905_BaseMigration")]
-    partial class BaseMigration
+    [Migration("20250716084454_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,6 +29,10 @@ namespace AuthService.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("password_hash");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("text(5)")
+                        .HasColumnName("role");
 
                     b.Property<string>("Username")
                         .IsRequired()
