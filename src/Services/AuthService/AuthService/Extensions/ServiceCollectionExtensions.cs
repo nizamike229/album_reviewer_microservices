@@ -6,7 +6,7 @@ namespace AuthService.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static WebApplicationBuilder AddJwtAuthentication(this WebApplicationBuilder builder)
+    public static void AddJwtAuthentication(this WebApplicationBuilder builder)
     {
         builder.Services.AddAuthentication(options =>
             {
@@ -37,6 +37,5 @@ public static class ServiceCollectionExtensions
                 };
             });
         builder.Services.AddAuthorization();
-        return builder;
     }
 }
