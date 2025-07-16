@@ -1,3 +1,4 @@
+using AuthService.Context;
 using AuthService.Extensions;
 using AuthService.Middlewares;
 
@@ -8,6 +9,7 @@ if (builder.Environment.IsDevelopment())
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<AuthDbContext>();
 builder.AddJwtAuthentication();
 builder.Services.AddServices();
 
