@@ -12,8 +12,8 @@ public static class UserMapper
         {
             Id = Guid.NewGuid().ToString(),
             Username = request.Username,
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword(request.Password),
-            Role =  Role.User
+            PasswordHash = request.Password,
+            Role =  nameof(Role.User)
         };
     }
 }

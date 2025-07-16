@@ -35,7 +35,8 @@ public sealed partial class AuthDbContext : DbContext
                 .HasColumnType("text(40)")
                 .HasColumnName("username");
             entity.Property(e => e.Role)
-                .HasColumnName("role");
+                .HasColumnName("role")
+                .HasColumnType("text(5)");
         });
     }
 
