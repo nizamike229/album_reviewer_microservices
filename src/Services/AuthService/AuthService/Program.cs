@@ -9,6 +9,7 @@ if (builder.Environment.IsDevelopment())
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.AddJwtAuthentication();
+builder.Services.AddServices();
 
 var app = builder.Build();
 
