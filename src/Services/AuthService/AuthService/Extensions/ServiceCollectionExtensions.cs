@@ -36,6 +36,7 @@ public static class ServiceCollectionExtensions
                     }
                 };
             });
+        builder.Services.AddAuthorization();
         return builder;
     }
 }
