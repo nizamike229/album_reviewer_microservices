@@ -1,8 +1,11 @@
+using ReviewService.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
+builder.Services.AddServices();
 
 var app = builder.Build();
 
