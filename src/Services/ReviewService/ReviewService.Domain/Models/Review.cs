@@ -15,6 +15,5 @@ public class Review
     public required string Description { get; set; }
 
     public required string UserId { get; set; }
-
     public required string MbId { get; set; }
 }
