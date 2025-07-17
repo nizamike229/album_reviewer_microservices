@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReviewService.Domain.Models;
 
-namespace ReviewService.Infrastructure.Context;
+namespace ReviewService.Infrastructure.Persistence;
 
 public partial class ReviewDbContext : DbContext
 {
