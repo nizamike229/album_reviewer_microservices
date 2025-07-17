@@ -5,16 +5,14 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>ReviewService</RootNamespace>
+        <UserSecretsId>40be50b4-fa6f-4e75-9a18-75f8a8f03b24</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.7" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5"/>
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.3" />
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.3" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Controllers\" />
     </ItemGroup>
 
     <ItemGroup>
