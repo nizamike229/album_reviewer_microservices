@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using ReviewService.Application.Services;
 using ReviewService.Domain.Repositories;
 using ReviewService.Infrastructure.Repositories;
 
@@ -53,5 +54,6 @@ public static class ServiceCollectionExtensions
     public static void AddServices(this IServiceCollection services)
     {
         services.AddScoped<IReviewRepository, ReviewRepository>();
+        services.AddScoped<IReviewService, Infrastructure.Services.ReviewService>();
     }
 }
