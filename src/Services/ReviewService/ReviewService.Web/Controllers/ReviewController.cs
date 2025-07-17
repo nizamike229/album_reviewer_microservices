@@ -2,6 +2,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReviewService.Application.Services;
+using ReviewService.Domain.Models;
 using ReviewService.Mapping;
 using ReviewService.Models;
 
@@ -25,6 +26,15 @@ public class ReviewController : ControllerBase
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         var result = await _reviewService.Post(request.ToReview(userId!));
+        return Ok(result);
+    }
+
+    [Authorize]
+    [HttpGet]
+    [ActionName("getAllByMbId")]
+    public async Task<ActionResult<List<Review>>> GetAllByMbId([FromQuery]string mbId)
+    {
+        var result = await _reviewService.GetAll(mbId);
         return Ok(result);
     }
 }
