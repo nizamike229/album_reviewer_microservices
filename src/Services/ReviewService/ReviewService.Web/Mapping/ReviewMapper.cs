@@ -6,7 +6,7 @@ namespace ReviewService.Mapping;
 
 public static class ReviewMapper
 {
-    public static Review ToReview(this ReviewRequest request)
+    public static Review ToReview(this ReviewRequest request,string userId)
     {
         return new Review
         {
@@ -14,7 +14,7 @@ public static class ReviewMapper
             Rating = request.Rating,
             TrackRatings = JsonSerializer.Serialize(request.TrackRatings),
             Description = request.Description,
-            UserId = request.UserId,
+            UserId = userId,
             MbId = request.MbId
         };
     }
