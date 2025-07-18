@@ -3,10 +3,12 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import { getUsername } from "../lib/apiClient";
+  import { browser } from "$app/environment";
 
   let query = "";
   let albums: string | any[] = [];
   let loading = false;
+  let username = "";
 
   type Album = {
     title: string;
@@ -65,7 +67,7 @@
 
       albums = (await Promise.all(coversLoaded)).filter(Boolean);
     } catch (err) {
-      console.error("Ошибка при поиске:", err);
+      console.error("Search error:", err);
     } finally {
       loading = false;
     }
@@ -76,12 +78,15 @@
   };
 
   function isLoggedIn() {
-    return document.cookie.includes("access_token");
+    return browser ? document.cookie.includes("access_token") : false;
   }
 
-  onMount(() => {
+  onMount(async () => {
     if (!isLoggedIn()) {
       goto("/promo");
+    }
+    if (browser) {
+      username = await getUsername() || "Guest";
     }
   });
 </script>
@@ -90,18 +95,18 @@
   <span class="text-2xl font-bold text-indigo-400">🎧 Music Albums</span>
   <div class="flex items-center gap-4">
     <span class="text-xl font-semibold text-zinc-100 font-mono"
-      >{getUsername() || "Гость"}</span
+      >{username}</span
     >
     <img
       src="/default-avatar.jpg"
-      alt="Аватар"
+      alt="Avatar"
       class="w-16 h-16 rounded-xl bg-zinc-800 border border-zinc-700 shadow"
     />
   </div>
 </header>
 <div class="pt-24 min-h-screen bg-zinc-900 text-zinc-100 px-4 py-8 font-mono">
   <h1 class="text-4xl font-bold mb-8 text-center font-mono">
-    🎧 Поиск альбомов
+    🎧 Search Albums
   </h1>
 
   <div class="max-w-3xl mx-auto mb-10">
@@ -109,7 +114,7 @@
       type="text"
       bind:value={query}
       on:keydown={(e: KeyboardEvent) => e.key === "Enter" && search()}
-      placeholder="Введите название альбома…"
+      placeholder="Enter album name..."
       class="w-full bg-zinc-800 text-white text-xl px-5 py-4 rounded-2xl outline-none focus:ring-2 focus:ring-zinc-400 transition font-mono"
     />
   </div>
@@ -125,7 +130,7 @@
       </div>
     {:else if albums.length === 0 && query}
       <p class="text-center text-zinc-400 col-span-full">
-        Ничего не найдено или нет обложек.
+        No results found or no album covers available.
       </p>
     {:else}
       {#each albums as album (album.mbid)}
@@ -137,7 +142,7 @@
         >
           <img
             src={album.cover}
-            alt="Обложка"
+            alt="Album cover"
             class="w-48 h-48 object-cover rounded-2xl shadow-lg mb-6 transition-transform duration-200 group-hover:scale-105 group-hover:shadow-2xl"
           />
           <h2
