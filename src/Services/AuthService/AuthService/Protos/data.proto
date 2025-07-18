@@ -5,7 +5,7 @@ option csharp_namespace = "GrpcAuthService";
 package data;
 
 service GetUsernameById {
-  rpc SendData (DataRequest) returns (DataReply);
+  rpc GetUsername (DataRequest) returns (DataReply);
 }
 
 message DataRequest {
