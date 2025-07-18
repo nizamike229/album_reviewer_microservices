@@ -2,6 +2,7 @@ using System.Text.Json;
 using GrpcAuthService;
 using Microsoft.EntityFrameworkCore;
 using ReviewService.Domain.Models;
+using ReviewService.Domain.Models.Response;
 using ReviewService.Domain.Repositories;
 using ReviewService.Infrastructure.Persistence;
 
@@ -25,17 +26,27 @@ public class ReviewRepository : IReviewRepository
         return "Review was published successfully!";
     }
 
-    public async Task<List<Review>> GetAll(string mbId)
+    public async Task<List<ReviewResponse>> GetAll(string mbId)
     {
         var reviews = await _context.Reviews.Where(r => r.MbId == mbId).ToListAsync();
+        var reviewResponse = new List<ReviewResponse>();
         foreach (var review in reviews)
         {
             var username = (await _getUsernameByIdClient.GetUsernameAsync(new DataRequest { UserId = review.UserId }))
                 .Username;
-            review.UserId = username;
+            reviewResponse.Add(new ReviewResponse
+            {
+                Id = review.Id,
+                Rating = review.Rating,
+                TrackRatings = review.TrackRatings,
+                Description = review.Description,
+                UserId = review.UserId,
+                Username = username,
+                MbId = review.MbId
+            });
         }
 
-        return reviews;
+        return reviewResponse;
     }
 
     public async Task<AverageReviewModel> GetAverage(string mbId)
