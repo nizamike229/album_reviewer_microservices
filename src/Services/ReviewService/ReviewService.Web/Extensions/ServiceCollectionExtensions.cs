@@ -1,4 +1,5 @@
 using System.Text;
+using GrpcAuthService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using ReviewService.Application.Services;
@@ -55,5 +56,13 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<IReviewRepository, ReviewRepository>();
         services.AddScoped<IReviewService, Infrastructure.Services.ReviewService>();
+    }
+
+    public static void AddGrpcDependencies(this IServiceCollection services)
+    {
+        services.AddGrpcClient<GetUsernameById.GetUsernameByIdClient>(o =>
+        {
+            o.Address = new Uri("https://localhost:7059");
+        });
     }
 }
