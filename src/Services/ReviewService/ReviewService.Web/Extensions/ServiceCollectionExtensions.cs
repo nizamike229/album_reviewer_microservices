@@ -65,4 +65,15 @@ public static class ServiceCollectionExtensions
             o.Address = new Uri("https://localhost:7059");
         });
     }
+
+    public static void ConfigureCors(this WebApplication app)
+    {
+        app.UseCors(policy =>
+            policy
+                .WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+        );
+    }
 }

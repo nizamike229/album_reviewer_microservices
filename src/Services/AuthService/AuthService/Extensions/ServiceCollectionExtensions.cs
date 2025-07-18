@@ -54,4 +54,15 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IAuthRepository, AuthRepository>();
         services.AddScoped<IAuthService, Services.AuthService>();
     }
+
+    public static void ConfigureCors(this WebApplication app)
+    {
+        app.UseCors(policy =>
+            policy
+                .WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+        );
+    }
 }
