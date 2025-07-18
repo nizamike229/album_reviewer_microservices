@@ -9,12 +9,19 @@
 
     <ItemGroup>
         <PackageReference Include="BCrypt.Net-Next" Version="4.0.3"/>
+        <PackageReference Include="Grpc.AspNetCore" Version="2.71.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.7"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5"><PrivateAssets>all</PrivateAssets><IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.5"/>
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="9.0.3"/>
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="9.0.3"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <Protobuf Include="Protos\data.proto" GrpcServices="Server"/>
     </ItemGroup>
 
 </Project>
