@@ -25,6 +25,7 @@ if (app.Environment.IsDevelopment())
 
 app.MapGrpcService<GrpcService>();
 app.UseMiddleware<ExceptionHandlerMiddleware>();
+app.ConfigureCors();
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
