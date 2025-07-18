@@ -4,9 +4,12 @@ using ReviewService.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
+if (builder.Environment.IsDevelopment())
+    builder.Configuration.AddUserSecrets<Program>();
 
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
+builder.Services.AddGrpcDependencies();
 builder.Services.AddDbContext<ReviewDbContext>();
 builder.AddJwtAuthentication();
 builder.Services.AddServices();
