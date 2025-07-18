@@ -1,4 +1,5 @@
 using System.Text.Json;
+using GrpcAuthService;
 using Microsoft.EntityFrameworkCore;
 using ReviewService.Domain.Models;
 using ReviewService.Domain.Repositories;
@@ -9,10 +10,12 @@ namespace ReviewService.Infrastructure.Repositories;
 public class ReviewRepository : IReviewRepository
 {
     private readonly ReviewDbContext _context;
+    private readonly GetUsernameById.GetUsernameByIdClient _getUsernameByIdClient;
 
-    public ReviewRepository(ReviewDbContext context)
+    public ReviewRepository(ReviewDbContext context, GetUsernameById.GetUsernameByIdClient getUsernameByIdClient)
     {
         _context = context;
+        _getUsernameByIdClient = getUsernameByIdClient;
     }
 
     public async Task<string> Post(Review review)
@@ -24,7 +27,15 @@ public class ReviewRepository : IReviewRepository
 
     public async Task<List<Review>> GetAll(string mbId)
     {
-        return await _context.Reviews.Where(r => r.MbId == mbId).ToListAsync();
+        var reviews = await _context.Reviews.Where(r => r.MbId == mbId).ToListAsync();
+        foreach (var review in reviews)
+        {
+            var username = (await _getUsernameByIdClient.GetUsernameAsync(new DataRequest { UserId = review.UserId }))
+                .Username;
+            review.UserId = username;
+        }
+
+        return reviews;
     }
 
     public async Task<AverageReviewModel> GetAverage(string mbId)
