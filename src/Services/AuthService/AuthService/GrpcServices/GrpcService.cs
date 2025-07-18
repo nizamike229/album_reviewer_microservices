@@ -14,7 +14,7 @@ public class GrpcService : GetUsernameById.GetUsernameByIdBase
         _context = context;
     }
 
-    public override async Task<DataReply> SendData(DataRequest request, ServerCallContext context)
+    public override async Task<DataReply> GetUsername(DataRequest request, ServerCallContext context)
     {
         var username = (await _context.Users.FirstOrDefaultAsync(u => u.Id == request.UserId))!.Username;
         return new DataReply
