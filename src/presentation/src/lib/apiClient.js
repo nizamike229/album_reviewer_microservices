@@ -12,8 +12,10 @@ export function setAccessToken(token) {
 }
 
 export function getAccessToken() {
-  const match = document.cookie.match(/(?:^|; )access_token=([^;]*)/);
-  return match ? match[1] : null;
+  if (typeof window !== "undefined") {
+    const match = document.cookie.match(/(?:^|; )access_token=([^;]*)/);
+    return match ? match[1] : null;
+  }
 }
 
 /**
