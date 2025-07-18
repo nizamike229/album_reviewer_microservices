@@ -15,6 +15,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.ConfigureCors();
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
@@ -24,6 +26,7 @@ app.MapReverseProxy(proxyPipeline =>
 {
     proxyPipeline.UseAuthentication();
     proxyPipeline.UseAuthorization();
+    proxyPipeline.ConfigureCorsInPipeline();
 });
 
 app.MapControllers();
