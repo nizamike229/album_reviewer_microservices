@@ -8,8 +8,8 @@ namespace AuthService.Repositories;
 
 public class AuthRepository : IAuthRepository
 {
-    private readonly ITokenService _tokenService;
     private readonly AuthDbContext _context;
+    private readonly ITokenService _tokenService;
 
     public AuthRepository(ITokenService tokenService, AuthDbContext context)
     {

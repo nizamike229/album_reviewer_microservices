@@ -1,6 +1,4 @@
-﻿using AuthService.Enums;
-
-namespace AuthService.Entities;
+﻿namespace AuthService.Entities;
 
 public class User
 {

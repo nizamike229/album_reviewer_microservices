@@ -37,13 +37,9 @@ public static class ServiceCollectionExtensions
                     {
                         var authHeader = context.Request.Headers["Authorization"].FirstOrDefault();
                         if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer "))
-                        {
                             context.Token = authHeader.Substring("Bearer ".Length).Trim();
-                        }
                         else if (context.Request.Cookies.ContainsKey("access_token"))
-                        {
                             context.Token = context.Request.Cookies["access_token"];
-                        }
 
                         return Task.CompletedTask;
                     }

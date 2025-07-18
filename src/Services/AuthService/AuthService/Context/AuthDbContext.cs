@@ -12,10 +12,7 @@ public sealed partial class AuthDbContext : DbContext
     public AuthDbContext(DbContextOptions<AuthDbContext> options)
         : base(options)
     {
-        if (Database.GetPendingMigrations().Any())
-        {
-            Database.Migrate();
-        }
+        if (Database.GetPendingMigrations().Any()) Database.Migrate();
     }
 
     public DbSet<User> Users { get; set; }

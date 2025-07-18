@@ -5,8 +5,8 @@ namespace AuthService.Middlewares;
 
 public class ExceptionHandlerMiddleware
 {
-    private readonly RequestDelegate _next;
     private readonly ILogger<ExceptionHandlerMiddleware> _logger;
+    private readonly RequestDelegate _next;
 
     public ExceptionHandlerMiddleware(
         RequestDelegate next,
@@ -36,7 +36,7 @@ public class ExceptionHandlerMiddleware
 
         var response = new
         {
-            StatusCode = context.Response.StatusCode,
+            context.Response.StatusCode,
             Message = "Internal Server Error",
             Details = exception.Message
         };

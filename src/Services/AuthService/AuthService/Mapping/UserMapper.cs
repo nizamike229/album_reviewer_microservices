@@ -13,7 +13,7 @@ public static class UserMapper
             Id = Guid.NewGuid().ToString(),
             Username = request.Username,
             PasswordHash = request.Password,
-            Role =  nameof(Role.User)
+            Role = nameof(Role.User)
         };
     }
 }
