@@ -21,4 +21,26 @@ public static class ServiceCollectionExtensions
         builder.Services.AddReverseProxy()
             .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
     }
+
+    public static void ConfigureCors(this WebApplication app)
+    {
+        app.UseCors(policy =>
+            policy
+                .WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+        );
+    }
+
+    public static void ConfigureCorsInPipeline(this IReverseProxyApplicationBuilder proxyPipeline)
+    {
+        proxyPipeline.UseCors(policy =>
+            policy
+                .WithOrigins("http://localhost:5173")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+        );
+    }
 }
