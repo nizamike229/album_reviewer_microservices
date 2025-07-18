@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcAuthService";
+
+package data;
+
+service GetUsernameById {
+  rpc SendData (DataRequest) returns (DataReply);
+}
+
+message DataRequest {
+  string userId = 1;
+}
+
+message DataReply {
+  string username = 1;
+}
