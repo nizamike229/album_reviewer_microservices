@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option csharp_namespace = "GrpcAuthService";
 
-package data;
+package authService;
 
 service GetUsernameById {
   rpc GetUsername (DataRequest) returns (DataReply);
