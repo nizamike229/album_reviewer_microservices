@@ -32,7 +32,7 @@ public class AuthController : ControllerBase
             Expires = DateTime.UtcNow.AddMinutes(
                 Convert.ToDouble(_configuration["Jwt:ExpireMinutes"]))
         });
-        return Ok(new { Message = "Login successful" });
+        return Ok(token);
     }
 
     [HttpPost]
