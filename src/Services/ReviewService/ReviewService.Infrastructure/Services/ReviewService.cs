@@ -1,5 +1,6 @@
 using ReviewService.Application.Services;
 using ReviewService.Domain.Models;
+using ReviewService.Domain.Models.Response;
 using ReviewService.Domain.Repositories;
 
 namespace ReviewService.Infrastructure.Services;
@@ -18,7 +19,7 @@ public class ReviewService : IReviewService
         return _reviewRepository.Post(review);
     }
 
-    public Task<List<Review>> GetAll(string mbId)
+    public Task<List<ReviewResponse>> GetAll(string mbId)
     {
         return _reviewRepository.GetAll(mbId);
     }
