@@ -54,6 +54,8 @@ public class ReviewRepository : IReviewRepository
         var reviews = await _context.Reviews
             .Where(r => r.MbId == mbId)
             .ToListAsync();
+        if (reviews.Count == 0)
+            throw new Exception("No reviews found");
 
         var averageRating = reviews.Average(r => r.Rating);
 
