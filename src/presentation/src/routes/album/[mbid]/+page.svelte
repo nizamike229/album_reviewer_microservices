@@ -41,12 +41,12 @@
     reviewError = "";
 
     const trackRatingsObj = Object.fromEntries(
-      userTrackRatings.map((rating, index) => [index + 1, rating])
+      userTrackRatings.map((rating, index) => [index + 1, Number(rating).toFixed(1)])
     );
 
     try {
       const response = await apiClient.post("/api/review/publish", {
-        rating: userAlbumRating,
+        rating: Number(userAlbumRating).toFixed(1),
         trackRatings: JSON.stringify(trackRatingsObj),
         description: reviewText,
         mbId: mbid
@@ -84,6 +84,8 @@
   let trackRatings: number[] = [];
   let loading = true;
   let error = "";
+  let hasRatings = true;
+  let ratingErrorMessage = "";
 
   function formatTime(ms: number): string {
     if (!ms) return "--:--";
@@ -141,12 +143,26 @@
           break;
         }
       }
-      albumRating = +(Math.random() * 2 + 3).toFixed(1);
-      trackRatings = tracks.map(() => +(Math.random() * 2 + 3).toFixed(1));
+      let ratingErrorMessage = "";
+      let hasRatings = true;
+      try {
+        const reviewsResponse = await apiClient.get("/api/review/getAverage", {
+          params: { mbId: mbid }
+        });
+        albumRating = reviewsResponse.data.average;
+        trackRatings = tracks.map((_, index) => reviewsResponse.data.trackRatings[index + 1] ?? 0);
+        loading = false;
+      } catch (err) {
+        albumRating = 0;
+        trackRatings = tracks.map(() => 0);
+        hasRatings = false;
+        ratingErrorMessage = "No one has left a review for this album yet.";
+        loading = false;
+      }
     } catch (e) {
       error = "Error loading album or tracklist";
+      loading = false;
     }
-    loading = false;
   });
 </script>
 
@@ -174,15 +190,20 @@
           class="w-52 h-52 md:w-72 md:h-72 object-cover rounded-2xl shadow-lg mb-4"
         />
         <div class="w-full">
+          {#if !hasRatings && ratingErrorMessage}
+            <div class="bg-zinc-900/70 border border-yellow-700 text-yellow-300 p-4 rounded-lg mb-4 text-center">
+              {ratingErrorMessage}
+            </div>
+          {/if}
           <h1 class="text-4xl font-bold mb-3 leading-tight">{albumTitle}</h1>
           <p class="text-zinc-400 text-2xl mb-6">{artist}</p>
-          <div class="flex items-center gap-3 mb-4">
-            <span class="text-yellow-400 text-3xl">★</span>
-            <span class="font-semibold text-2xl"
-              >{formatRating(albumRating)}</span
-            >
-            <span class="text-zinc-400 text-base ml-2">Album rating</span>
-          </div>
+          {#if hasRatings}
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-yellow-400 text-3xl">★</span>
+              <span class="font-semibold text-2xl">{formatRating(albumRating)}</span>
+              <span class="text-zinc-400 text-base ml-2">Album rating</span>
+            </div>
+          {/if}
           <button
             on:click={openReviewModal}
             class="w-full bg-yellow-500 hover:bg-yellow-600 hover:scale-[1.02] text-black font-bold py-3 px-6 rounded-lg shadow-lg transition-all duration-200 cursor-pointer active:scale-[0.98] active:bg-yellow-700"
@@ -210,15 +231,17 @@
                   >{track.title}</span
                 >
               </span>
-              <span class="flex items-center gap-3 min-w-[110px] justify-end">
-                <span class="text-zinc-500 font-mono"
-                  >{formatTime(track.length)}</span
-                >
-                <span class="text-yellow-400">★</span>
-                <span class="text-zinc-400 font-mono"
-                  >{formatRating(trackRatings[idx])}</span
-                >
-              </span>
+              {#if hasRatings}
+                <span class="flex items-center gap-3 min-w-[110px] justify-end">
+                  <span class="text-zinc-500 font-mono"
+                    >{formatTime(track.length)}</span
+                  >
+                  <span class="text-yellow-400">★</span>
+                  <span class="text-zinc-400 font-mono"
+                    >{formatRating(trackRatings[idx])}</span
+                  >
+                </span>
+              {/if}
             </li>
           {/each}
         </ol>
