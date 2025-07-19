@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.Json;
 using GrpcAuthService;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,18 @@ public class ReviewRepository : IReviewRepository
 
     public async Task<string> Post(Review review)
     {
+        var unescaped = JsonSerializer.Deserialize<string>(review.TrackRatings);
+        var raw = JsonSerializer.Deserialize<Dictionary<string, string>>(unescaped!);
+        var cleaned = raw!.ToDictionary(
+            kvp => kvp.Key,
+            kvp => double.TryParse(kvp.Value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d)
+                ? d
+                : throw new Exception($"Invalid number: {kvp.Value}")
+        );
+        review.TrackRatings = JsonSerializer.Serialize(cleaned);
+
         await _context.Reviews.AddAsync(review);
+
         await _context.SaveChangesAsync();
         return "Review was published successfully!";
     }
