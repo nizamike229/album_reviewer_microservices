@@ -32,9 +32,28 @@ public class ReviewController : ControllerBase
     [Authorize]
     [HttpGet]
     [ActionName("getAllByMbId")]
-    public async Task<ActionResult<List<Review>>> GetAllByMbId([FromQuery]string mbId)
+    public async Task<ActionResult<List<Review>>> GetAllByMbId([FromQuery] string mbId)
     {
         var result = await _reviewService.GetAll(mbId);
+        return Ok(result);
+    }
+
+    [Authorize]
+    [HttpGet]
+    [ActionName("getAverage")]
+    public async Task<ActionResult<List<AverageReviewModel>>> GetAverage([FromQuery] string mbId)
+    {
+        var result = await _reviewService.GetAverage(mbId);
+        return Ok(result);
+    }
+
+    [Authorize]
+    [HttpGet]
+    [ActionName("personal")]
+    public async Task<ActionResult<List<Review>>> GetPersonal()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var result = await _reviewService.GetPersonal(userId!);
         return Ok(result);
     }
 }
