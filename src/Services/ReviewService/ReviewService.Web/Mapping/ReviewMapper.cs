@@ -15,7 +15,7 @@ public static class ReviewMapper
             Rating = request.Rating,
             TrackRatings = JsonSerializer.Serialize(request.TrackRatings,
                 new JsonSerializerOptions
-                    { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping }),
+                    { WriteIndented = false, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping }),
             Description = request.Description,
             UserId = userId,
             MbId = request.MbId
