@@ -111,7 +111,3 @@ The project follows a microservices architecture pattern with:
 - Modern UI components
 - Real-time updates
 - Responsive design
-
-## License
-
-[MIT License](LICENSE)
