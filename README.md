@@ -8,19 +8,19 @@ The solution is organized into the following main components:
 
 ### 🚪 Gateway
 - **ApiGateway** - Reverse proxy implementation using YARP, handling routing and authentication of requests to internal services.
-- 🔐 JWT authentication integration
-- 📄 Swagger/OpenAPI documentation
-- 🔁 Request routing and load balancing
+  - 🔐 JWT authentication integration
+  - 📄 Swagger/OpenAPI documentation
+  - 🔁 Request routing and load balancing
 
 ### 🧩 Services
 
 #### 🛡️ Authentication Service
 - **AuthService** - Handles user authentication and authorization
-- 🔑 JWT token generation and validation
-- 👤 User management
-- 🗄️ SQLite database integration
-- 🔗 gRPC service implementation for inter-service communication
-- 🧂 BCrypt for password hashing
+  - 🔑 JWT token generation and validation
+  - 👤 User management
+  - 🗄️ SQLite database integration
+  - 🔗 gRPC service implementation for inter-service communication
+  - 🧂 BCrypt for password hashing
 
 #### 📝 Review Service
 - Clean Architecture implementation with separate projects:
