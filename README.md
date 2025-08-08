@@ -16,11 +16,11 @@ The solution is organized into the following main components:
 
 #### 🛡️ Authentication Service
 - **AuthService** - Handles user authentication and authorization
-  - 🔑 JWT token generation and validation
-  - 👤 User management
-  - 🗄️ SQLite database integration
-  - 🔗 gRPC service implementation for inter-service communication
-  - 🧂 BCrypt for password hashing
+- 🔑 JWT token generation and validation
+- 👤 User management
+- 🗄️ SQLite database integration
+- 🔗 gRPC service implementation for inter-service communication
+- 🧂 BCrypt for password hashing
 
 #### 📝 Review Service
 - Clean Architecture implementation with separate projects:
