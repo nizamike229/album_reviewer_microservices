@@ -8,9 +8,9 @@ The solution is organized into the following main components:
 
 ### 🚪 Gateway
 - **ApiGateway** - Reverse proxy implementation using YARP, handling routing and authentication of requests to internal services.
-  - 🔐 JWT authentication integration
-  - 📄 Swagger/OpenAPI documentation
-  - 🔁 Request routing and load balancing
+- 🔐 JWT authentication integration
+- 📄 Swagger/OpenAPI documentation
+- 🔁 Request routing and load balancing
 
 ### 🧩 Services
 
